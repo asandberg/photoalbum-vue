@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     onScroll: function(event) {
-      if(window.scrollY + window.innerHeight - this.$el.offsetTop >= this.$el.scrollHeight - 200) {
+      if(window.scrollY + window.innerHeight - this.$el.offsetTop >= this.$el.scrollHeight - 300) {
         this.load(this.lastLoadedPage + 1);
       }
     },

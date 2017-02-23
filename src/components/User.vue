@@ -6,7 +6,8 @@
           <p v-for="info in userInfo"><span>{{info.label}}:</span><span>{{info.value}}</span></p>
         </div>
         <div class="company">
-          <strong>{{ user.company.name }}</strong><br>
+          <h3 class="label">Company</h3>
+          <strong>{{ user.company.name }}</strong>
           <p>{{ user.company.catchPhrase }}</p>
           <p>{{ user.company.bs }}</p>
         </div>
@@ -92,12 +93,22 @@ h1, h2 {
   justify-content: space-between;
   margin-bottom: 40px;
 }
+.info > div {
+  margin: 1em;
+}
+
+.label {
+  color: rgb(156, 156, 156);
+  font-weight: lighter;
+  font-size: 0.9em;
+  text-transform: uppercase;
+}
 
 .info p { display: flex; justify-content: space-between; }
 
 .info p span:first-child {
   font-weight: bold;
-  padding-right: 100px;
+  padding-right: 5rem;
 }
 
 a {
