@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <h2 class="label">Photo</h2>
     <h1>{{ photo.title }}</h1>
 
       <img v-bind:src="photo.url" class="photo" />
@@ -9,6 +10,7 @@
 </template>
 
 <script>
+import config from '../config'
 export default {
   name: 'photo',
   data () {
@@ -17,13 +19,11 @@ export default {
     }
   },
   created: function() {
-    this.$http.get('http://jsonplaceholder.typicode.com/photos/' + this.$route.params.id).then(
+    this.$http.get(`${config.dataSourcePath}/photos/${this.$route.params.id}`).then(
       response => {
         this.photo = response.body;
       },
-      response => {
-
-      }
+      response => { console.error(response); }
     );
   }
 }
@@ -31,11 +31,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-  margin: 0 20px;
-}
-
 .photo {
   max-width: 80%;
   display: block;
@@ -44,9 +39,5 @@ h1, h2 {
 
 p {
   text-align: center;
-}
-
-a {
-  color: #42b983;
 }
 </style>

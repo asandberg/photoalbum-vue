@@ -1,6 +1,14 @@
 <template>
   <div id="app">
-    <header><router-link to="/"><h2>Vue Photo Album</h2></router-link></header>
+    <header>
+      <div class="wrapper">
+        <router-link to="/">Main page</router-link>
+        <a href="https://github.com/asandberg/photoalbum-vue">Project in Github</a>
+        <a href="http://jsonplaceholder.typicode.com/">JSON Placeholder data</a>
+        <a href="https://vuejs.org/">Vue.js</a>
+      </div>
+    </header>
+    <div id="banner"><h2>Vue photos</h2></div>
     <div id="main"><router-view></router-view></div>
     <footer><p>What are cookies made of?</footer>
   </div>
@@ -14,11 +22,24 @@ export default {
 
 <style>
 
+h1, h2 {
+  font-weight: normal;
+}
+
+a {
+  color: #42b983;
+}
 html, body {
   margin: 0; padding: 0;
+  position: relative;
 }
-#main, header a, header h2 {
-  max-width: 1100px;
+
+html { height: 100%; }
+body, #app { min-height: 100%; }
+
+#main, .wrapper {
+  max-width: 960px;
+  margin: auto;
 }
 
 h1, h2 {
@@ -38,20 +59,44 @@ h1, h2 {
 #main {
   margin-top: 60px;
   margin: 50px auto;
+  padding: 0 10px;
+}
+
+#banner {
+  height: 15rem;
+  background-color: rgb(72, 125, 65);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0px 10px 8px rgba(0,0,0,0.2);
+}
+
+#banner h2 {
+  font-size: 4rem;
+  font-weight: lighter;
+  text-shadow: 4px 4px 3px rgba(0,0,0,0.4);
 }
 
 header {
-  font-size: 1.5em;
-  background-color: rgb(34, 154, 42);
+  font-size: 1em;
+  background-color: rgb(255, 255, 255);
   margin: 0;
   padding: 0.5em;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+header .wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 
 header a, header h2 {
   padding: 0;
   margin: auto;
   text-decoration: none;
-  color: rgb(246, 246, 246);
+  color: rgb(51, 156, 56);
 }
 
 footer {
@@ -87,6 +132,13 @@ footer {
   box-sizing: border-box;
 }
 
+.label {
+  color: rgb(156, 156, 156);
+  font-weight: lighter;
+  font-size: 1em;
+  text-transform: uppercase;
+}
+
 @media (min-width: 1000px) {
   li:nth-child(7n+1) .photo { transform: rotate(3deg); }
   li:nth-child(7n+2) .photo { transform: rotate(-1deg); }
@@ -101,10 +153,18 @@ footer p { padding: 0; margin: 0; }
 
 @media (max-width: 600px) {
   .photo-list li {
-    width: 40%;
+    width: 80%;
   }
   .photo {
     width: 100%;
   }
+  #banner h2 {
+    font-size: 2.5rem;
+  }
+
+  #banner {
+    height: auto;
+  }
+
 }
 </style>

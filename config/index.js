@@ -3,6 +3,7 @@ var path = require('path')
 
 module.exports = {
   build: {
+    dataSourcePath: 'http://jsonplaceholder.typicode.com',
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../docs/index.html'),
     assetsRoot: path.resolve(__dirname, '../docs'),

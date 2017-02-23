@@ -1,5 +1,6 @@
 <template>
   <div class="user">
+    <h2 class="label">User</h2>
     <h1>{{ user.username }}</h1>
       <div class="info">
         <div>
@@ -16,7 +17,7 @@
         <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=40.7127837,-74.0059413&amp;key=AIzaSyB_GNwPXHh5X-KZ_H72hOp4kKlxAHBg_VI"></iframe>
       </div>
       <div class="album-list">
-        <h2>Albums created by {{user.username}}</h2>
+        <h2 class="text-left">Albums created by {{user.username}}</h2>
         <div v-for="album in albums">
           <router-link :to="'/album/' + album.id">{{album.title}}</router-link>
         </div>
@@ -25,16 +26,7 @@
 </template>
 
 <script>
-/*
-address
-company
-email
-id
-name
-phone
-username
-website
-*/
+import config from '../config'
 export default {
   data () {
     return {
@@ -44,9 +36,11 @@ export default {
     }
   },
   created: function() {
-    this.$http.get('http://jsonplaceholder.typicode.com/users/'+this.$route.params.id).then(
+    this.$http.get(`${config.dataSourcePath}/users/${this.$route.params.id}`).then(
       response => {
         this.user = response.body;
+
+        //Map user info for tidier layouting
         this.userInfo = [
           { label: "Name", value: this.user.name },
           { label: "Phone", value: this.user.phone },
@@ -55,32 +49,22 @@ export default {
           { label: "City", value: this.user.address.city },
         ]
       },
-      response => {
-
-      }
+      response => { console.error(response); }
     );
-      this.$http.get('http://jsonplaceholder.typicode.com/users/'+this.$route.params.id+'/albums').then(
-        response => {
-          this.albums = response.body;
-        },
-        response => {
 
-        }
-      );
+    //User's albums
+    this.$http.get(`${config.dataSourcePath}/users/${this.$route.params.id}/albums`).then(
+      response => {
+        this.albums = response.body;
+      },
+      response => { console.error(response); }
+    );
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-.wrapper {
-  display: flex;
-  flex-flow: row;
-}
 
 .map {
   width: 70%;
@@ -93,15 +77,9 @@ h1, h2 {
   justify-content: space-between;
   margin-bottom: 40px;
 }
+
 .info > div {
   margin: 1em;
-}
-
-.label {
-  color: rgb(156, 156, 156);
-  font-weight: lighter;
-  font-size: 0.9em;
-  text-transform: uppercase;
 }
 
 .info p { display: flex; justify-content: space-between; }
@@ -111,7 +89,16 @@ h1, h2 {
   padding-right: 5rem;
 }
 
-a {
-  color: #42b983;
+.text-left {
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .info {
+    flex-flow: column;
+  }
+  .map {
+    width: 90%;
+  }
 }
 </style>

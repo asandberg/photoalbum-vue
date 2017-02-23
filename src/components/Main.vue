@@ -1,16 +1,17 @@
 <template>
   <div>
-    <h1>Welcome!</h1>
     <ul class="photo-list">
       <li v-for="photo in photos">
         <router-link :to="'/photo/' + photo.id"><img v-bind:src="photo.thumbnailUrl" class="photo" /></router-link>
       </li>
     </ul>
-    <div></div>
+    <div class="loader" v-if="loading"><img v-bind:src="'static/ripple.svg'" /></div>
   </div>
 </template>
 
 <script>
+import config from '../config'
+
 export default {
   data () {
     return {
@@ -36,15 +37,34 @@ export default {
       if(this.loading)
         return;
       this.loading = true;
-      this.$http.get('http://jsonplaceholder.typicode.com/photos/?_limit=20&_page=' + page).then(
+      this.$http.get(`${config.dataSourcePath}/photos/?_limit=${config.photoLimit}&_page=${page}`).then(
         response => {
-          this.photos = this.photos.concat(response.body);
+
+          // Load album images
+          // The images are pre-loaded before they are added to the DOM
+          let imageCount = 0;
+          response.body.forEach((item, index) => {
+            let img = new Image();
+            imageCount++;
+            this.loading = true;
+            img.onload = () => {
+              item.thumbnailUrl = img.src;
+              this.photos.push(item);
+              imageCount--;
+
+              if(imageCount <= 0)
+                this.loading = false;
+            }
+            img.src = item.thumbnailUrl;
+          });
+
+          if(response.body.length == 0)
+            this.loading = false;
           this.lastLoadedPage = page;
-          this.loading = false;
         },
         response => {
+          console.error(response);
           this.loading = false;
-
         }
       );
     }
@@ -54,12 +74,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+.loader {
   text-align: center;
-}
-
-a {
-  color: #42b983;
+  width: 100%;
+  margin-top: -50px;
+  position: relative;
+  z-index: 1;
+  transition: width 1s, height 1s;
 }
 </style>
