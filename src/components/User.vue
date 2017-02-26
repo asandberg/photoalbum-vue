@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="map">
-        <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=40.7127837,-74.0059413&amp;key=AIzaSyB_GNwPXHh5X-KZ_H72hOp4kKlxAHBg_VI"></iframe>
+        <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q={{user.address.geo.lat}},{{user.address.geo.lng}}&amp;key=AIzaSyB_GNwPXHh5X-KZ_H72hOp4kKlxAHBg_VI"></iframe>
       </div>
       <div class="album-list">
         <h2 class="text-left">Albums created by {{user.username}}</h2>
