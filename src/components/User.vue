@@ -13,6 +13,7 @@
           <p>{{ user.company.bs }}</p>
         </div>
       </div>
+<<<<<<< HEAD
       <div class="map" v-if="false">
         <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=40.7127837,-74.0059413&amp;key=AIzaSyB_GNwPXHh5X-KZ_H72hOp4kKlxAHBg_VI"></iframe>
       </div>
